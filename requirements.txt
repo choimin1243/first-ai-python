@@ -8,3 +8,4 @@ opencv_python_headless==4.6.0.66
 protobuf==3.19.4
 Pillow==8.2.0
 opencv_python_headless==4.6.0.66
+streamlit_webrtc==0.42.0
