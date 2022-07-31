@@ -7,7 +7,7 @@ import time
 import streamlit as st 
 
 
-st.write("hello")
+
 
 def index_raised(yi, y9):
     if(y9-yi)>40:
@@ -18,8 +18,7 @@ def index_raised(yi, y9):
 
 
 # drawing tools
-tools = cv2.imread("tools.png")
-tools = tools.astype('uint8')
+
 
 mask = np.ones((480, 640))*255
 mask = mask.astype('uint8')
@@ -75,8 +74,6 @@ def getTool(x):
         return "erase"
 
 class VideoProcessor:
-    tools = cv2.imread("tools.png")
-    tools = tools.astype('uint8')
     mask = np.ones((480, 640))*255
     mask = mask.astype('uint8')
     def getTool(x):
@@ -237,7 +234,6 @@ class VideoProcessor:
         frm[:, :, 1] = op[:, :, 1]
         frm[:, :, 2] = op[:, :, 2]
 
-        frm[:max_y, ml:max_x] = cv2.addWeighted(tools, 0.7, frm[:max_y, ml:max_x], 0.3, 0)
 
         cv2.putText(frm, curr_tool, (270+ml,30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,0,255), 2)
 
