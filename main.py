@@ -3,7 +3,8 @@ import numpy as np
 import av
 import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
-
+import threading
+import time
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
@@ -13,22 +14,68 @@ hands = mp_hands.Hands(
     min_tracking_confidence=0.5
 )
 
+lock=threading.Lock()
+mask = np.ones((480, 640,3))
+mask = mask.astype('uint8')
+    
+img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
+
+def index_raised(yi, y9):
+	if (y9 - yi) > 40:
+		return True
+
+	return False
+
+
+
+
+
+
+
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     results = hands.process(image)
-
     # Draw the hand annotations on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    if results.multi_hand_landmarks:
-      for hand_landmarks in results.multi_hand_landmarks:
-        mp_drawing.draw_landmarks(
+    mask = np.ones(image.size,np.int8)
+    # mask=cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+    
+    with lock:
+        if results.multi_hand_landmarks:
+            for i in results.multi_hand_landmarks:
+                mp_drawing.draw_landmarks(
             image,
-            hand_landmarks,
+            i,
             mp_hands.HAND_CONNECTIONS,
             mp_drawing_styles.get_default_hand_landmarks_style(),
             mp_drawing_styles.get_default_hand_connections_style())
+            x8,y8=int(i.landmark[8].x*640), int(i.landmark[8].y*480)
+            x12,y12=int(i.landmark[12].x*640), int(i.landmark[12].y*480)
+
+            xi,yi= int(i.landmark[12].x*640), int(i.landmark[12].y*480)
+            y9  = int(i.landmark[9].y*480)
+            if index_raised(yi, y9):
+                cv2.line(mask, (img_container["prev_x"],img_container["prev_y"]),(xi, yi), 0, 5)
+                img_container["prev_x"],img_container["prev_y"]= xi, yi
+                
+            else:
+                img_container["prev_x"]= xi
+                img_container["prev_y"]= yi
+
+
+            if (x8>x12):
+                second=time.strftime('%S')
+                second=int(second)
+                image=cv2.circle(image, (x8,x12),40, (0,0,255), -1)
+                image=cv2.circle(image,(x8+second,x12),5,(255,0,0),-1)
+                
+
+                
+
+
+
     return cv2.flip(image, 1)
 
 
@@ -40,7 +87,7 @@ class VideoProcessor:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
-        img = process(img)
+        img= process(img)
 
         return av.VideoFrame.from_ndarray(img, format="bgr24")
 
