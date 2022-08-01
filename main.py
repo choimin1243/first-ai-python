@@ -5,6 +5,8 @@ import mediapipe as mp
 from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 import threading
 import time
+import math
+
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
@@ -68,8 +70,14 @@ def process(image):
             if (x8>x12):
                 second=time.strftime('%S')
                 second=int(second)
-                image=cv2.circle(image, (x8,x12),40, (0,0,255), -1)
-                image=cv2.circle(image,(x8+second,x12),5,(255,0,0),-1)
+                cv2.circle(image, (x8,y8),20, (0,0,255), -1)
+                earth_x=x8+int(200*math.sin(second/2))
+                earth_y=y8+int(200*math.cos(second/2))
+                moonx=earth_x+20+int(60*math.sin(2*second+10))
+                moony=earth_y+20+int(60*math.sin(2*second+10))
+
+                cv2.circle(image,(earth_x,earth_y),8,(255,0,0),-1)
+                cv2.circle(image,(moonx,moony),3,(0,255,255),-1)
                 
 
                 
