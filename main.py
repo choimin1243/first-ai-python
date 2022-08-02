@@ -35,9 +35,6 @@ def index_raised(yi, y9):
 	return False
 
 
-
-
-@st.cache(ttl=24*60*60)
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
