@@ -27,7 +27,10 @@ mask = mask.astype('uint8')
     
 img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
 
-@st.cache(ttl=1*3600)
+
+
+
+
 def index_raised(yi, y9):
 	if (y9 - yi) > 40:
 		return True
