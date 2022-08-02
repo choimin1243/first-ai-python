@@ -6,9 +6,6 @@ import time
 import streamlit as st
 import threading
 
-st.experimental_memo.clear()
-st.experimental_singleton.clear()
-
 
 agree = st.checkbox('start? check_box')
 
@@ -64,7 +61,6 @@ def process(image):
     # Draw the hand annotations on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    # mask=cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
     
     if results.multi_hand_landmarks:    
         st.experimental_memo.clear()
@@ -96,8 +92,6 @@ class VideoProcessor:
     st.experimental_memo.clear()
     st.experimental_singleton.clear()
     def recv(self, frame):
-        st.experimental_memo.clear()
-        st.experimental_singleton.clear()
         img = frame.to_ndarray(format="bgr24")
 
         img= process(img)
@@ -112,4 +106,3 @@ webrtc_ctx = webrtc_streamer(
     video_processor_factory=VideoProcessor,
     async_processing=True,
 )
-
