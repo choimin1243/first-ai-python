@@ -78,6 +78,8 @@ RTC_CONFIGURATION = RTCConfiguration(
 )
 
 class VideoProcessor:
+    st.experimental_memo.clear()
+    st.experimental_singleton.clear()
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
 
@@ -93,3 +95,4 @@ webrtc_ctx = webrtc_streamer(
     video_processor_factory=VideoProcessor,
     async_processing=True,
 )
+
