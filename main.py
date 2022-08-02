@@ -8,8 +8,8 @@ import time
 import math
 from streamlit import caching
 
-caching.clear_cache()
-
+caching.clear_memo_cache()
+caching.clear_singleton_cache()
 
 
 
