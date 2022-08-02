@@ -8,7 +8,6 @@ import time
 import math
 from streamlit import caching
 
-st.cache(hash_funcs=MyModelClass: lambda _: 1)
 
 
 mp_drawing = mp.solutions.drawing_utils
