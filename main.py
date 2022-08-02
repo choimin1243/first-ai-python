@@ -6,49 +6,34 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode, RTCConfiguration
 import threading
 import time
 import math
-from streamlit import caching
-import streamlit as st
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
-mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
-    	model_complexity=0,
-    	min_detection_confidence=0.5,
-    	min_tracking_confidence=0.5)
-
-img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0}
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
+    model_complexity=0,
+    min_detection_confidence=0.5,
+    min_tracking_confidence=0.5
+)
 
 lock=threading.Lock()
-
+mask = np.ones((480, 640,3))
+mask = mask.astype('uint8')
     
+img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
 
-
-
-@st.cache(allow_output_mutation=True)
 def index_raised(yi, y9):
 	if (y9 - yi) > 40:
 		return True
 
 	return False
 
-@st.cache(allow_output_mutation=True)
+
+
+
+
+
+
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -56,6 +41,7 @@ def process(image):
     # Draw the hand annotations on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    mask = np.ones(image.size,np.int8)
     # mask=cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
     
     with lock:
@@ -105,7 +91,6 @@ RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
 
-@st.cache(allow_output_mutation=True)
 class VideoProcessor:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
