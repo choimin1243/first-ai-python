@@ -9,46 +9,17 @@ import math
 from streamlit import caching
 import streamlit as st
 
-
-@st.cache
-def load_model1():
-	mp_drawing = mp.solutions.drawing_utils
-	return mp_drawing
-
-
-
-@st.cache
-def load_model2():
-	mp_drawing_styles = mp.solutions.drawing_styles
-	return mp_drawing_styles
-
-
-@st.cache
-def load_model3():
-	mp_drawing_styles = mp.solutions.drawing_styles
-	return mp_drawing_styles
-
-
-@st.cache
-def load_model4():
-	mp_hands = mp.solutions.hands
-	return mp_hands
-
-@st.cache
-def load_model5():
-	hands = mp_hands.Hands(
+mp_drawing = mp.solutions.drawing_utils
+mp_drawing_styles = mp.solutions.drawing_styles
+mp_drawing_styles = mp.solutions.drawing_styles
+mp_hands = mp.solutions.hands
+hands = mp_hands.Hands(
     	model_complexity=0,
     	min_detection_confidence=0.5,
     	min_tracking_confidence=0.5)
-	return hands
 
-
-
-@st.cache
-def load_model5():
-	img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
+img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
 	
-	return img_container
 
 	
 
