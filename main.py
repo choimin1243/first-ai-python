@@ -18,7 +18,7 @@ hands = mp_hands.Hands(
     	min_detection_confidence=0.5,
     	min_tracking_confidence=0.5)
 
-img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
+img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0}
 	
 
 	
