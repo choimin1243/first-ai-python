@@ -43,7 +43,7 @@ def index_raised(yi, y9):
 
 
 
-@st.cache(ttl=1*3600)
+@st.cache(allow_output_mutation=True)
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -101,7 +101,7 @@ RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
 
-@st.cache(ttl=1*3600)
+@st.cache(allow_output_mutation=True)
 class VideoProcessor:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
