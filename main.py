@@ -7,6 +7,14 @@ import threading
 import time
 import math
 
+@st.cache(ttl=24*3600)
+def api_request(img_container):
+    return api.run(img_container)
+
+
+
+
+
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_hands = mp.solutions.hands
