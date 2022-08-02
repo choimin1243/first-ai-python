@@ -9,19 +9,30 @@ import threading
 st.experimental_memo.clear()
 st.experimental_singleton.clear()
 
-@st.experimental_singleton
+
+agree = st.checkbox('start? check_box')
+
+if agree:
+    st.experimental_memo.clear()
+    st.experimental_singleton.clear()
+    st.write('Great!')
+
+
+
+
+@st.cache(allow_output_mutation=True)
 def my_drawing():
     mp_drawing=mp.solutions.drawing_utils
     return mp_drawing
 
 
-@st.experimental_singleton
+@st.cache(allow_output_mutation=True)
 def my_hands():
     mp_hands=mp.solutions.hands
     return mp_hands
 
 
-@st.experimental_singleton
+@st.cache(allow_output_mutation=True)
 def hands():
     hands= mp_hands.Hands(
     model_complexity=0,
@@ -55,7 +66,11 @@ def process(image):
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     # mask=cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
     
-    if results.multi_hand_landmarks:
+    if results.multi_hand_landmarks:    
+        st.experimental_memo.clear()
+        st.experimental_singleton.clear()
+
+
         for i in results.multi_hand_landmarks:
             mp_drawing.draw_landmarks(image,i,mp_hands.HAND_CONNECTIONS)
             x8,y8=int(i.landmark[8].x*640), int(i.landmark[8].y*480)
@@ -81,6 +96,8 @@ class VideoProcessor:
     st.experimental_memo.clear()
     st.experimental_singleton.clear()
     def recv(self, frame):
+        st.experimental_memo.clear()
+        st.experimental_singleton.clear()
         img = frame.to_ndarray(format="bgr24")
 
         img= process(img)
