@@ -7,9 +7,6 @@ import threading
 import time
 import math
 
-@st.cache(ttl=24*3600)
-def api_request(img_container):
-    return api.run(img_container)
 
 
 
@@ -30,6 +27,7 @@ mask = mask.astype('uint8')
     
 img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev_y":0,"mask":mask}
 
+@st.cache(ttl=1*3600)
 def index_raised(yi, y9):
 	if (y9 - yi) > 40:
 		return True
@@ -42,6 +40,7 @@ def index_raised(yi, y9):
 
 
 
+@st.cache(ttl=1*3600)
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -99,6 +98,7 @@ RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
 
+@st.cache(ttl=1*3600)
 class VideoProcessor:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
