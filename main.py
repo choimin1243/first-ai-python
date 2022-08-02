@@ -7,6 +7,7 @@ import threading
 import time
 import math
 from streamlit import caching
+import streamlit as st
 
 
 @st.cache
