@@ -8,10 +8,8 @@ import time
 import math
 from streamlit import caching
 
-caching.clear_memo_cache()
-caching.clear_singleton_cache()
 
-
+st.cache(hash_funcs=MyModelClass: lambda _: 1)})
 
 
 mp_drawing = mp.solutions.drawing_utils
@@ -32,7 +30,7 @@ img_container={"time_init":True,"ml":150,"max_x":400,"max_y":50,"prev_x":0,"prev
 
 
 
-
+st.cache(hash_funcs=MyModelClass: lambda _: 1)})
 def index_raised(yi, y9):
 	if (y9 - yi) > 40:
 		return True
@@ -43,7 +41,7 @@ def index_raised(yi, y9):
 
 
 
-
+st.cache(hash_funcs=MyModelClass: lambda _: 1)})
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -101,7 +99,7 @@ RTC_CONFIGURATION = RTCConfiguration(
     {"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]}
 )
 
-
+st.cache(hash_funcs=MyModelClass: lambda _: 1)})
 class VideoProcessor:
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
