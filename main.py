@@ -6,8 +6,11 @@ import time
 import streamlit as st
 import threading
 
+st.experimental_memo.clear()
+st.experimental_singleton.clear()
 
-agree = st.checkbox('start? check_box')
+
+agree = st.checkbox('start?')
 
 if agree:
     st.experimental_memo.clear()
@@ -17,19 +20,19 @@ if agree:
 
 
 
-@st.cache(allow_output_mutation=True)
+@st.experimental_singleton
 def my_drawing():
     mp_drawing=mp.solutions.drawing_utils
     return mp_drawing
 
 
-@st.cache(allow_output_mutation=True)
+@st.experimental_singleton
 def my_hands():
     mp_hands=mp.solutions.hands
     return mp_hands
 
 
-@st.cache(allow_output_mutation=True)
+@st.experimental_singleton
 def hands():
     hands= mp_hands.Hands(
     model_complexity=0,
@@ -61,6 +64,7 @@ def process(image):
     # Draw the hand annotations on the image.
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    # mask=cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
     
     if results.multi_hand_landmarks:    
         st.experimental_memo.clear()
@@ -92,6 +96,8 @@ class VideoProcessor:
     st.experimental_memo.clear()
     st.experimental_singleton.clear()
     def recv(self, frame):
+        st.experimental_memo.clear()
+        st.experimental_singleton.clear()
         img = frame.to_ndarray(format="bgr24")
 
         img= process(img)
