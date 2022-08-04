@@ -25,14 +25,12 @@ def my_drawing():
     mp_drawing=mp.solutions.drawing_utils
     return mp_drawing
 
-
-@st.experimental_singleton
+@st.experimental_memo
 def my_hands():
     mp_hands=mp.solutions.hands
     return mp_hands
 
 
-@st.experimental_singleton
 def hands():
     hands= mp_hands.Hands(
     model_complexity=0,
@@ -93,8 +91,6 @@ RTC_CONFIGURATION = RTCConfiguration(
 )
 
 class VideoProcessor:
-    st.experimental_memo.clear()
-    st.experimental_singleton.clear()
     def recv(self, frame):
         st.experimental_memo.clear()
         st.experimental_singleton.clear()
