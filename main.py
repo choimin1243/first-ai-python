@@ -18,14 +18,10 @@ if agree:
     st.write('Great!')
 
 
-
-
-@st.experimental_singleton
 def my_drawing():
     mp_drawing=mp.solutions.drawing_utils
     return mp_drawing
 
-@st.experimental_memo
 def my_hands():
     mp_hands=mp.solutions.hands
     return mp_hands
@@ -54,7 +50,6 @@ image_container={"img":0}
     
 
 
-@st.experimental_memo
 def process(image):
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
