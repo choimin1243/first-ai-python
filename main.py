@@ -6,10 +6,6 @@ import time
 import streamlit as st
 import threading
 
-st.experimental_memo.clear()
-st.experimental_singleton.clear()
-
-
 agree = st.checkbox('start?')
 
 if agree:
