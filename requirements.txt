@@ -1,0 +1,17 @@
+﻿streamlit==1.4.0
+ffmpeg==1.4
+joblib==1.1.0
+mediapipe==0.8.9.1
+numpy==1.19.3
+Pillow==8.2.0
+opencv_python_headless==4.6.0.66
+protobuf==3.19.4
+Pillow==8.2.0
+opencv_python_headless==4.6.0.66
+streamlit_webrtc==0.42.0
+torch
+torchvision
+matplotlib
+PyYAML
+requests
+tqdm
