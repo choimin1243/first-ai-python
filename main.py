@@ -50,8 +50,6 @@ def process(image):
     # mask=cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
     
     if results.multi_hand_landmarks:    
-        st.experimental_memo.clear()
-        st.experimental_singleton.clear()
 
 
         for i in results.multi_hand_landmarks:
@@ -77,8 +75,6 @@ RTC_CONFIGURATION = RTCConfiguration(
 
 class VideoProcessor:
     def recv(self, frame):
-        st.experimental_memo.clear()
-        st.experimental_singleton.clear()
         img = frame.to_ndarray(format="bgr24")
 
         img= process(img)
