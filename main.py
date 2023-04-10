@@ -6,12 +6,7 @@ import time
 import streamlit as st
 import threading
 
-agree = st.checkbox('start?')
 
-if agree:
-    st.experimental_memo.clear()
-    st.experimental_singleton.clear()
-    st.write('Great!')
 
 
 def my_drawing():
